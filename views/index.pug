@@ -1,0 +1,37 @@
+extends layout.pug
+
+block sitetitle
+  | Startseite
+
+block navbartitle
+  h1(class="pagetitle") Recent Flights
+
+block content
+    div(class="row align-items-center g-3 px-3 pb-2 text-body-secondary small border-bottom")
+        div(class="col-2") Callsign
+        div(class="col-2 d-flex align-items-center gap-2")
+            img(src="geo-alt-fill.svg" alt="" width="16" height="16")
+            span Origin country
+        div(class="col-2 d-flex align-items-center gap-2")
+            img(src="clock-fill.svg" alt="" width="16" height="16")
+            span Seen at
+        div(class="col-2 d-flex align-items-center gap-2")
+            img(src="speedometer.svg" alt="" width="16" height="16")
+            span Speed
+        div(class="col-2 d-flex align-items-center gap-2")
+            img(src="arrow-up-circle-fill.svg" alt="" width="16" height="16")
+            span Height
+        div(class="col-2 d-flex align-items-center gap-2")
+            img(src="code.svg" alt="" width="16" height="16")
+            span Distance
+
+    ul(class="list-group list-group-flush")
+        each flight in flights
+            li(class="list-group-item")
+                div(class="row align-items-center g-3")
+                    div(class="col-2 fw-semibold")= flight.callsign || "—"
+                    div(class="col-2")= flight.origin
+                    div(class="col-2")= flight.seen_at.toLocaleTimeString("de-DE")
+                    div(class="col-2") #{Math.round(flight.velocity * 3.6)} km/h
+                    div(class="col-2") #{(flight.altitude_baro / 1000).toFixed(1)} km
+                    div(class="col-2") #{flight.distance_km.toFixed(1)} km

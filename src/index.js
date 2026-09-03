@@ -1,14 +1,15 @@
 require("dotenv").config();
 const { distanceInKm } = require("./geo");
 const { getFlights } = require("./opensky");
-const { saveOverflight, updateOverflight } = require("./db");
+const { saveOverflight, updateOverflight, deleteOldData} = require("./db");
 
 const HOME_LAT = Number(process.env.HOME_LAT);
 const HOME_LON = Number(process.env.HOME_LON);
 
-const REQUEST_INTERVALL = 30000; // 30 Sekunden
-const REVISIT_TIMEOUT = 1800000; // 30 Min
+const REQUEST_INTERVALL = 30000; // 30 Seconds
+const REVISIT_TIMEOUT = 1800000; // 30 Minutes
 const MAX_DISTANCE_TO_DISPLAY = 15; // In KM
+const DB_CLEANUP_INTERVALL = 86400000;
 
 const overflights = [];
 const lastSeen = new Map();
@@ -99,6 +100,7 @@ async function main() {
     await tick();
     setInterval(tick, REQUEST_INTERVALL);
     setInterval(cleanupLastSeen, REVISIT_TIMEOUT);
+    setInterval(deleteOldData, DB_CLEANUP_INTERVALL);
 }
 
 main().catch(console.error);

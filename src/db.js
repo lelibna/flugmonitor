@@ -26,4 +26,20 @@ async function updateOverflight(id, flight) {
   );
 }
 
-module.exports = { pool, saveOverflight, updateOverflight };
+async function deleteOldData() {
+    const res = await pool.query(`DELETE FROM overflights WHERE seen_at < now() - interval '1 day'`
+    );
+    console.log(`${res.rowCount} deleted`);
+}
+
+async function getRecentOverflights(limit) {
+    const res = await pool.query(
+        `SELECT hexaddress, callsign, origin, seen_at, distance_km, altitude_baro, velocity, category 
+        FROM overflights 
+        ORDER BY seen_at 
+        DESC 
+        LIMIT $1`, [limit]);
+    return res.rows;
+}
+
+module.exports = { pool, saveOverflight, updateOverflight, deleteOldData, getRecentOverflights};

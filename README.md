@@ -11,9 +11,11 @@ You choose a point with coordinates. The backend will request data of the positi
 From this data it is calculated how far these flights were from the chosen coordinate and if they came closer than a configured distance the flight will be marked as overflight. 
 The distance is calculated with the Haversine formula.
 
-## Data source
+## Credits
 
-Position data is from [OpenSky Network](https://opensky-network.org/)
+Position data from [OpenSky Network](https://opensky-network.org/).
+
+Icons from [Bootstrap Icons](https://icons.getbootstrap.com/).
 
 ## Why is the requested are larger than the overflight radius?
 

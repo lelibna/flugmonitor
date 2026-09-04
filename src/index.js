@@ -9,7 +9,7 @@ const HOME_LON = Number(process.env.HOME_LON);
 const REQUEST_INTERVALL = 30000; // 30 Seconds
 const REVISIT_TIMEOUT = 1800000; // 30 Minutes
 const MAX_DISTANCE_TO_DISPLAY = 15; // In KM
-const DB_CLEANUP_INTERVALL = 86400000;
+const DB_CLEANUP_INTERVALL = 43200000;
 
 const overflights = [];
 const lastSeen = new Map();

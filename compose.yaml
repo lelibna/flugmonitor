@@ -8,6 +8,7 @@ services:
       PGHOST: db
     restart: unless-stopped
   web:
+    build: .
     image: flugmonitor
     command: node src/server.js
     env_file: .env

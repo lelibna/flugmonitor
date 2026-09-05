@@ -20,7 +20,7 @@ block content
             span Speed
         div(class="col-2 d-flex align-items-center gap-2")
             img(src="arrow-up-circle-fill.svg" alt="" width="16" height="16")
-            span Height
+            span Height (Geo)
         div(class="col-2 d-flex align-items-center gap-2")
             img(src="code.svg" alt="" width="16" height="16")
             span Distance
@@ -33,5 +33,5 @@ block content
                     div(class="col-2")= flight.origin
                     div(class="col-2")= flight.seen_at.toLocaleTimeString("de-DE")
                     div(class="col-2") #{Math.round(flight.velocity * 3.6)} km/h
-                    div(class="col-2") #{(flight.altitude_baro / 1000).toFixed(1)} km
+                    div(class="col-2") #{Math.round(flight.altitude_geo)} m
                     div(class="col-2") #{flight.distance_km.toFixed(1)} km

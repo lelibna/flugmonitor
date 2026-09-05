@@ -10,14 +10,14 @@ const pool = new Pool({
 
 async function saveOverflight(flight, now) {
   const res = await pool.query(
-    `INSERT INTO overflights (hexaddress, callsign, origin, seen_at, distance_km, altitude_baro, velocity, category) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
+    `INSERT INTO overflights (hexaddress, callsign, origin, seen_at, distance_km, altitude_geo, velocity, category) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
     [
       flight.hexAddress,
       flight.callSign,
       flight.origin,
       new Date(now),
       flight.distanceFromHome,
-      flight.baroAltitude,
+      flight.geoAltitude,
       flight.velocity,
       flight.category,
     ]
@@ -27,8 +27,8 @@ async function saveOverflight(flight, now) {
 
 async function updateOverflight(id, flight) {
   await pool.query(
-    `UPDATE overflights SET distance_km = $1, altitude_baro = $2, velocity = $3 WHERE id = $4`,
-    [flight.distanceFromHome, flight.baroAltitude, flight.velocity, id]
+    `UPDATE overflights SET distance_km = $1, altitude_geo = $2, velocity = $3 WHERE id = $4`,
+    [flight.distanceFromHome, flight.geoAltitude, flight.velocity, id]
   );
 }
 
@@ -40,7 +40,7 @@ async function deleteOldData() {
 
 async function getRecentOverflights(limit) {
     const res = await pool.query(
-        `SELECT hexaddress, callsign, origin, seen_at, distance_km, altitude_baro, velocity, category 
+        `SELECT hexaddress, callsign, origin, seen_at, distance_km, altitude_geo, velocity, category 
         FROM overflights 
         ORDER BY seen_at 
         DESC 

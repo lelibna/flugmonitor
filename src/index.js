@@ -32,7 +32,7 @@ async function processOverflights(flights) {
                 origin: flight.origin,
                 time: now,
                 distanceKm: flight.distanceFromHome,
-                altitude: flight.baroAltitude,
+                altitude: flight.geoAltitude,
             };
             overflights.unshift(entry);
             overflights.splice(10);
@@ -55,7 +55,7 @@ async function processOverflights(flights) {
             if(flight.distanceFromHome < seen.minDistance) {
                 seen.minDistance = flight.distanceFromHome;
                 seen.entry.distanceKm = flight.distanceFromHome;
-                seen.entry.altitude = flight.baroAltitude;
+                seen.entry.altitude = flight.geoAltitude;
 
                 if(seen.id != null) {
                     try {

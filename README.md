@@ -13,20 +13,17 @@ The distance is calculated with the Haversine formula.
 
 ## Run
 
-Two main processes:
-Collector: Gets data from Opensky, detects overflights and writes them to PostgreSQL
-Server: Serves the web interface and API
+Copy the example .env and fill it out:
 
-Both run at the same time in seperate terminals.
+`cp .env.example .env`
 
-bash:
-npm start
-npm run server
+You will need an Opensky Account for the Credentials.
 
-(Or 'npm run dev' and 'npm run dev:server' to restart automatically on file changes.)
 
-The web interface is at '/'
-The JSON API for the client is at '/api/display'
+Run `docker compose up`
+
+The web interface is at `localhost:3000/`
+The JSON API for the client is at `localhost:3000/api/display`
 
 ## Credits
 

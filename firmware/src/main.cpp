@@ -1,43 +1,37 @@
 #include <Arduino.h>
-#include <GxEPD2_BW.h>
+#include <ArduinoJson.h>
+#include "display.h"
+#include "wifi.h"
 
-#define PIN_CS   5
-#define PIN_DC   0
-#define PIN_RST  2
-#define PIN_BUSY 15
-#define PIN_CLK  20
-#define PIN_DIN  21
-
-GxEPD2_BW<GxEPD2_420_GDEY042T81, GxEPD2_420_GDEY042T81::HEIGHT> display(GxEPD2_420_GDEY042T81(PIN_CS, PIN_DC, PIN_RST, PIN_BUSY));
-
-void displayBegin() {
-    pinMode(PIN_CS, OUTPUT);   digitalWrite(PIN_CS, HIGH);
-    pinMode(PIN_DC, OUTPUT);   digitalWrite(PIN_DC, HIGH);
-    pinMode(PIN_RST, OUTPUT);  digitalWrite(PIN_RST, HIGH);
-
-    SPI.begin(PIN_CLK, -1, PIN_DIN, PIN_CS);
-    display.init(115200, true, 2, false);
-    display.setRotation(0); // 0/2 = quer, 1/3 = hoch
-}
-
-void draw() {
-    display.setFullWindow();
-    display.firstPage();
-    do {
-      display.fillScreen(GxEPD_WHITE);
-      display.setTextColor(GxEPD_BLACK);
-      display.setCursor(10, 30);
-      display.print("Test");
-      display.drawRect(5, 5, display.width() - 10, display.height() - 10, GxEPD_BLACK);
-    } while (display.nextPage());
-}
+constexpr int MAX_FLIGHTS {4};
 
 void setup() {
     Serial.begin(115200);
     delay(1000);
     displayBegin();
-    draw();
-    display.hibernate();
+    initWifi();
+
+    Flight flights[MAX_FLIGHTS];
+    int n = fetchFlights(flights, MAX_FLIGHTS);
+
+    if (n < 0) {
+      Serial.println("Error");
+    } else if (n == 0) {
+      Serial.println("No flights.");
+    } else {
+      for (int i = 0; i < n; i++) {
+        Serial.printf("%-8s %5.1f km  %5.1f km height  %.1f km/h  %-10s origin\n",
+        flights[i].cs, flights[i].dist, flights[i].alt, flights[i].v, flights[i].orgn);
+      }
+    }
+
+    drawFlights(flights, n);
+    
+    //Later Deep Sleep
+    //esp_sleep_enable_timer_wakeup(60ULL * 1000000ULL);
+    //esp_deep_sleep_start();
+    delay(60000);
+    ESP.restart();
 }
 
 void loop() {}

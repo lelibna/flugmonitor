@@ -23,7 +23,7 @@ int fetchFlights(Flight *flights, int maxCount) {
 
     int code = http.GET();
     if(code != 200) {
-        Serial.printf("HTTP-Fehler %d: %s\n", code, http.errorToString(code).c_str());
+        Serial.printf("HTTP-Error %d: %s\n", code, http.errorToString(code).c_str());
         http.end();
         return -1;
     }
@@ -33,7 +33,7 @@ int fetchFlights(Flight *flights, int maxCount) {
     http.end();
 
     if(err) {
-        Serial.printf("Json-Fehler: %s\n", err.c_str());
+        Serial.printf("Json-Error: %s\n", err.c_str());
         return -1;
     }
 

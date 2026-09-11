@@ -27,7 +27,7 @@ async function getToken() {
     cachedToken = data.access_token;
     tokenExpiresAt = Date.now() + (data.expires_in - 60) * 1000;
 
-    console.log("Neues Token geholt, gültig bis", new Date(tokenExpiresAt).toLocaleTimeString());
+    console.log("New Token fetched, valid until", new Date(tokenExpiresAt).toLocaleTimeString());
 
     return cachedToken;
 }
@@ -70,8 +70,8 @@ async function getFlights() {
     console.log(`${daten.states?.length ?? 0} flights`);
     console.log("Credits left:" + res.headers.get("x-rate-limit-remaining"));
 
-    const flugzeuge = daten.states.map(parseState);
-    return flugzeuge;
+    const flights = daten.states.map(parseState);
+    return flights;
 }
 
 module.exports = { getFlights, parseState };

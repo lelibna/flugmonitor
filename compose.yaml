@@ -26,7 +26,7 @@ services:
       TZ: ${TZ}
     volumes:
       - dbdata:/var/lib/postgresql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro,Z
     restart: unless-stopped
 volumes:
   dbdata:

@@ -44,6 +44,7 @@ int fetchFlights(Flight *flights, int maxCount) {
         strlcpy(flights[n].orgn, f["orgn"] | "", sizeof(flights[n].orgn));
         flights[n].alt  = f["alt"]  | 0.0f;
         flights[n].dist = f["dist"] | 0.0f;
+        flights[n].mindist = f["mindist"] | 0.0f;
         strlcpy(flights[n].seen, f["seen"] | "", sizeof(flights[n].seen));
         flights[n].v    = f["v"]    | 0;
         n++;

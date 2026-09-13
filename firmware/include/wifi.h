@@ -6,6 +6,7 @@ struct Flight {
     char orgn[32];
     float alt;
     float dist;
+    float mindist;
     char seen[6];
     float v;
 };

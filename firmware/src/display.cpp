@@ -22,6 +22,7 @@ void drawFlights(Flight* flights, int n) {
 
     display.setFullWindow();
     display.firstPage();
+
     do {
         display.fillScreen(GxEPD_WHITE);
         display.setTextColor(GxEPD_BLACK);
@@ -38,10 +39,17 @@ void drawFlights(Flight* flights, int n) {
             for (int i = 0; i < n; i++) {
                 int16_t y = top + i * rowH;
                 if (i > 0) display.drawLine(left, y, right, y, GxEPD_BLACK);
+                
 
                 display.setTextSize(2);
                 display.setCursor(left + 8, y + 8);
                 display.print(flights[i].cs);
+
+                int16_t x1, y1;
+                uint16_t w, h;
+                display.setTextSize(2);
+                display.getTextBounds(flights[i].orgn, 0, 0, &x1, &y1, &w, &h);
+                if (w > 230) display.setTextSize(1);
                 display.setCursor(left + 8, y + 32);
                 display.print(flights[i].orgn);
 
@@ -49,14 +57,19 @@ void drawFlights(Flight* flights, int n) {
                 display.setCursor(left + 250, y + 8);
                 display.printf("%.1f km dist.", flights[i].dist);
                 display.setCursor(left + 250, y + 20);
-                display.printf("%.1f km alt.", flights[i].alt);
+                display.printf("%.1f km min.", flights[i].mindist);
                 display.setCursor(left + 250, y + 32);
-                display.printf("%.0f km/h", flights[i].v);
+                display.printf("%.1f km alt.", flights[i].alt);
                 display.setCursor(left + 250, y + 44);
+                display.printf("%.0f km/h", flights[i].v);
+                display.setCursor(left + 250, y + 56);
                 display.printf("seen %s", flights[i].seen);
+
                 }
-            }
+        }
     } while (display.nextPage());
+
     display.hibernate();
 }
+
 

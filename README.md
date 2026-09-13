@@ -2,14 +2,14 @@
 
 **In Progress**
 
-A self-hosted service which collects flights over a chosen area and provides the last overflights via it's own API. 
-Client is an E-Paper-Display connected to an ESP32.
+- A self-hosted service which collects flights over a chosen area and provides the last overflights via it's own API. 
+- Client is an E-Paper-Display connected to an ESP32.
 
 ## How does it work?
 
-You choose a point with coordinates. The backend will request data of the positions of flights in the square area around the coordinate.
-From this data it is calculated how far these flights were from the chosen coordinate and if they came closer than a configured distance the flight will be marked as overflight. 
-The distance is calculated with the Haversine formula.
+- You choose a point with coordinates. The backend will request data of the positions of flights in the square area around the coordinate.
+- From this data it is calculated how far these flights were from the chosen coordinate and if they came closer than a configured distance the flight will be marked as overflight. 
+- The distance is calculated with the Haversine formula.
 
 ## Run
 
@@ -19,11 +19,10 @@ Copy the example .env and fill it out:
 
 You will need an Opensky Account for the Credentials.
 
-
 Run `docker compose up`
 
-The web interface is at `localhost:3000/`
-The JSON API for the client is at `localhost:3000/api/display`
+- The web interface is at `localhost:3000/`
+- The JSON API for the client is at `localhost:3000/api/display`
 
 # Display Client
 
@@ -31,20 +30,20 @@ The client is an ESP32-C6 with a 4.2" E-Paper Display. It connects via WiFi and 
 
 ## Hardware 
 
-Microcontroller: ESP32-C6-DevKitC-1
-Display: Waveshare 4.2" E-Paper **V2**, 400x300, black/white (Display controller: SSD1683)
+- Microcontroller: ESP32-C6-DevKitC-1
+- Display: Waveshare 4.2" E-Paper **V2**, 400x300, black/white (Display controller: SSD1683)
 
 ## Wiring
 
-Display - ESP32
-DIN - GPIO21
-CLK - GPIO20
-CS - GPIO5
-DC - GPIO0
-RST - GPIO2
-BUSY - GPIO15
-VCC - 3V3
-GND - GND
+- Display - ESP32
+- DIN - GPIO21
+- CLK - GPIO20
+- CS - GPIO5
+- DC - GPIO0
+- RST - GPIO2
+- BUSY - GPIO15
+- VCC - 3V3
+- GND - GND
 
 ## Run
 

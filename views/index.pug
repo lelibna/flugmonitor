@@ -24,14 +24,19 @@ block content
         div(class="col-2 d-flex align-items-center gap-2")
             img(src="/img/code.svg" alt="" width="16" height="16")
             span Distance
+        div(class="col-2 d-flex align-items-center gap-2")
+            img(src="/img/code.svg" alt="" width="16" height="16")
+            span Min. Distance
+        
 
     ul(class="list-group list-group-flush")
         each flight in flights
             li(class="list-group-item")
                 div(class="row align-items-center g-3")
-                    div(class="col-2 fw-semibold")= flight.callsign || "—"
-                    div(class="col-2")= flight.origin
-                    div(class="col-2")= flight.seen_at.toLocaleTimeString("de-DE")
-                    div(class="col-2") #{Math.round(flight.velocity * 3.6)} km/h
-                    div(class="col-2") #{Math.round(flight.altitude_geo)} m
-                    div(class="col-2") #{flight.distance_km.toFixed(1)} km
+                    div(class="col fw-semibold")= flight.callsign || "—"
+                    div(class="col")= flight.origin || "—"
+                    div(class="col")= flight.seen_at.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" })
+                    div(class="col")= flight.velocity == null ? "—" : Math.round(flight.velocity * 3.6) + " km/h"
+                    div(class="col")= flight.altitude_geo == null ? "—" : Math.round(flight.altitude_geo) + " m"
+                    div(class="col")= flight.distance_km == null ? "—" : flight.distance_km.toFixed(1) + " km"
+                    div(class="col")= flight.min_distance_km == null ? "—" : flight.min_distance_km.toFixed(1) + " km"

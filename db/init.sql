@@ -5,6 +5,7 @@ CREATE TABLE overflights (
     origin text,
     seen_at TIMESTAMPTZ NOT NULL,
     distance_km real,
+    min_distance_km real,
     altitude_geo real,
     velocity real,
     category integer

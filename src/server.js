@@ -25,6 +25,7 @@ app.get('/api/display', async (req, res) => {
                 orgn: f.origin,
                 alt: f.altitude_geo == null ? null : Number((f.altitude_geo / 1000).toFixed(1)),
                 dist: f.distance_km == null ? null : Number(f.distance_km.toFixed(1)),
+                mindist: f.min_distance_km == null ? null : Number(f.min_distance_km.toFixed(1)),
                 seen: f.seen_at.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }),
                 v: Math.round(f.velocity*3.6),
             }))

@@ -33,6 +33,7 @@ async function processOverflights(flights) {
                 time: now,
                 distanceKm: flight.distanceFromHome,
                 altitude: flight.geoAltitude,
+                velocity: flight.velocity,
             };
             overflights.unshift(entry);
             overflights.splice(10);
@@ -46,23 +47,19 @@ async function processOverflights(flights) {
             lastSeen.set(flight.hexAddress, {
                 time: now,
                 id,
-                minDistance: flight.distanceFromHome,
                 entry,
             });
         } else {
             seen.time = now;
+            seen.entry.distanceKm = flight.distanceFromHome;
+            seen.entry.altitude = flight.geoAltitude;
+            seen.entry.velocity = flight.velocity;
 
-            if(flight.distanceFromHome < seen.minDistance) {
-                seen.minDistance = flight.distanceFromHome;
-                seen.entry.distanceKm = flight.distanceFromHome;
-                seen.entry.altitude = flight.geoAltitude;
-
-                if(seen.id != null) {
-                    try {
-                        await updateOverflight(seen.id, flight);
-                    } catch (err) {
-                        console.error("DB Error when updating: ", err.message);
-                    }
+            if(seen.id != null) {
+                try {
+                    await updateOverflight(seen.id, flight);
+                } catch (err) {
+                    console.error("DB Error when updating: ", err.message);
                 }
             }
         }
